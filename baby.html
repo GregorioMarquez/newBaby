@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Noticia: Gran sorpresa familiar</title>
+<meta name="description" content="Titular de noticia anunciando la llegada de un bebé" />
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --accent:#e8505b;
+    --muted:#6b7280;
+    --shadow: 0 8px 24px rgba(15,23,42,0.06);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#f8fafc, #eef2ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+    color:#0f172a;
+  }
+  .card{
+    width:100%;
+    max-width:860px;
+    background:var(--card);
+    box-shadow:var(--shadow);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  header{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    padding:28px;
+    border-bottom:1px solid #f1f5f9;
+  }
+  .logo{
+    width:68px;height:68px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background: linear-gradient(135deg,#ffe4e6,#fff1f2);
+    font-weight:700;color:var(--accent);
+    font-size:20px;
+  }
+  h1{margin:0;font-size:20px}
+  .meta{color:var(--muted);font-size:14px;margin-top:6px}
+  .cover{
+    display:flex;
+    gap:24px;
+    padding:28px;
+  }
+  .image{
+    width:46%;
+    min-height:220px;
+    border-radius:10px;
+    background: linear-gradient(180deg,#fff,#f8fafc);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #f1f5f9;
+    overflow:hidden;
+  }
+  .image img{
+    width:100%;
+    height:auto;
+    object-fit:cover;
+    border-radius:10px;
+  }
+  .body{
+    width:54%;
+    font-size:16px;
+    color:#111827;
+    line-height:1.6;
+  }
+  .lead{font-weight:600;color:#0b1220;margin-bottom:8px}
+  .paragraph{margin-bottom:12px}
+  .reveal{
+    margin-top:14px;
+    display:flex;gap:10px;align-items:center;
+  }
+  .cta{
+    background:var(--accent);
+    color:white;
+    padding:10px 14px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 6px 18px rgba(232,80,91,0.18);
+  }
+  footer{padding:18px 28px;border-top:1px solid #f1f5f9;color:var(--muted);font-size:13px}
+  .small-muted{color:var(--muted);font-size:13px}
+  @media (max-width:800px){
+    .cover{flex-direction:column}
+    .image,.body{width:100%}
+    .image{min-height:180px}
+  }
+  #confettiCanvas {
+    position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;
+  }
+</style>
+</head>
+<body>
+<div class="card" role="article" aria-labelledby="headline">
+  <header>
+    <div class="logo" aria-hidden="true">FM</div>
+    <div>
+      <h1 id="headline">¡Noticia: Nuestra familia crece!</h1>
+      <div class="meta" id="pubdate">Publicado el <span id="date">1ero de Noviembre del 2025</span> · Corresponsal: Familia Márquez Porras</div>
+    </div>
+  </header>
+
+  <div class="cover">
+    <div class="image" aria-hidden="true">
+      <!-- ✅ Cambiá aquí el nombre del archivo según tu imagen -->
+      <img src="images/Image.jpg" alt="Nuestra ecografía o anuncio del bebé">
+    </div>
+
+    <div class="body">
+      <div class="lead">Hoy anunciamos con mucha alegría que estamos esperando un segundo bebé.</div>
+
+      <p class="paragraph">Después de muchos planes, risas y abrazos, queremos compartir la noticia: nuestro hogar tendrá un nuevo miembro. Nuestra familia se siente emocionada y conmovida.</p>
+
+      <p class="paragraph">La fecha prevista es el <strong id="duedate">10 de mayo del 2026</strong>.</p>
+
+      <div class="reveal">
+        <button class="cta" id="revealBtn">Hacer la gran revelación</button>
+        <div class="small-muted">Pulsa para ver la sorpresa final.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="small-muted">Si esta noticia te ha emocionado tanto como a nosotros, ¡responde con un abrazo virtual! 💌</div>
+  </footer>
+</div>
+
+<canvas id="confettiCanvas"></canvas>
+
+<script>
+  // Mostrar fecha actual
+  const dateEl = document.getElementById('date');
+  const now = new Date();
+  const opciones = { year:'numeric', month:'long', day:'numeric' };
+  dateEl.textContent = now.toLocaleDateString('es-ES', opciones);
+
+  // Fecha prevista del bebé
+  document.getElementById('duedate').textContent = '10 de mayo de 2026';
+
+  // 🎉 Confetti animación
+  (function(){
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth;
+    let H = canvas.height = window.innerHeight;
+    window.addEventListener('resize', ()=>{W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight;});
+
+    function random(min,max){ return Math.random()*(max-min)+min }
+    class Piece {
+      constructor(){
+        this.x = random(0,W); this.y = random(-H,0);
+        this.w = random(6,12); this.h = random(8,18);
+        this.vx = random(-1,1); this.vy = random(2,6);
