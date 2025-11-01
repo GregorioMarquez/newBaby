@@ -23,7 +23,16 @@
     justify-content:center;
     padding:32px;
     color:#0f172a;
-  }
+    min-height:100vh;
+    }
+    
+    /* En móviles, empujar un poco más hacia abajo */
+    @media (max-width:600px){
+      body{
+        align-items:flex-start;  /* deja de centrar exacto */
+        padding-top: 10vh;       /* baja la tarjeta aprox 10% del alto de pantalla */
+      }
+    }
   .card{
     width:100%;
     max-width:860px;
@@ -121,9 +130,9 @@
     </div>
 
     <div class="body">
-      <div class="lead">Hoy anunciamos con mucha alegría que estamos esperando un segundo bebé.</div>
+      <div class="lead">Nuevo bebe en camino!.</div>
 
-      <p class="paragraph">Después de muchos planes, risas y abrazos, queremos compartir la noticia: nuestro hogar tendrá un nuevo miembro. Nuestra familia se siente emocionada y conmovida.</p>
+      <p class="paragraph">Después de muchos planes, risas y abrazos, queremos compartir la noticia: nuestro hogar tendrá un nuevo miembro. Nuestra familia se siente emocionada.</p>
 
       <p class="paragraph">La fecha prevista es el <strong id="duedate">10 de mayo del 2026</strong>.</p>
 
@@ -165,3 +174,4 @@
         this.x = random(0,W); this.y = random(-H,0);
         this.w = random(6,12); this.h = random(8,18);
         this.vx = random(-1,1); this.vy = random(2,6);
+
